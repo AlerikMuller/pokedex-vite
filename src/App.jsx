@@ -100,12 +100,7 @@ function PokemonDetail() {
 }
 
 function About() {
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">About This Pokédex</h1>
-      <p>This is a Pokédex application built with React and Vite, using data from a site called "PokéAPI".</p>
-    </div>
-  );
+  return <div className="p-4">This is the About page.</div>;
 }
 
 function capitalize(str) {
