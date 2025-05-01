@@ -18,59 +18,43 @@ function App() {
     </Router>
   );
 }
-
-function getCardColor(id) {
-  if ([1, 2, 3, 10, 11, 12].includes(id)) return '#8bd674'; // green
-  if ([4, 5, 6].includes(id)) return '#f5ac78'; // orange
-  if ([7, 8, 9].includes(id)) return '#9db7f5'; // blue
-  return '#eee';
-}
-
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
 function Pokedex() {
   const [pokemonList, setPokemonList] = useState([]);
   const [offset, setOffset] = useState(0);
 
   useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon?limit=12&offset=${offset}`)
+    fetch(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`)
       .then(res => res.json())
-      .then(data => {
-        Promise.all(data.results.map(p =>
-          fetch(p.url).then(res => res.json())
-        )).then(setPokemonList);
-      });
+      .then(data => setPokemonList(data.results));
   }, [offset]);
 
   return (
-      <div className="p-6">
-        <h1 className="text-2xl font-bold mb-4">Mini Pokédex</h1>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {pokemonList.map(pokemon => (
-            <Link to={`/pokemon/${pokemon.name}`} key={pokemon.name} className="border p-4 rounded shadow hover:bg-gray-100">
-              {capitalize(pokemon.name)}
-            </Link>
-          ))}
-        </div>
-        <div className="flex justify-between mt-6">
-          <button
-            onClick={() => setOffset(prev => Math.max(prev - 20, 0))}
-            disabled={offset === 0}
-            className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400"
-          >
-            Previous
-          </button>
-          <button
-            onClick={() => setOffset(prev => prev + 20)}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            Next
-          </button>
-        </div>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Mini Pokédex</h1>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {pokemonList.map(pokemon => (
+          <Link to={`/pokemon/${pokemon.name}`} key={pokemon.name} className="border p-4 rounded shadow hover:bg-gray-100">
+            {capitalize(pokemon.name)}
+          </Link>
+        ))}
       </div>
-    );
+      <div className="flex justify-between mt-6">
+        <button
+          onClick={() => setOffset(prev => Math.max(prev - 20, 0))}
+          disabled={offset === 0}
+          className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400"
+        >
+          Previous
+        </button>
+        <button
+          onClick={() => setOffset(prev => prev + 20)}
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
 }
 
 function PokemonDetail() {
@@ -116,10 +100,6 @@ function About() {
 
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-function PokemonDetail() {
-  return <div className="p-4">Detailed Pokémon view placeholder.</div>;
 }
 
 export default App;
