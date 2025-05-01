@@ -53,7 +53,7 @@ function Pokedex() {
     <div className="pokedex-container">
       <div className="pokemon-grid">
         {pokemonList.map((pokemon) => (
-          <Link to={`/pokemon/${pokemon.name}`} key={pokemon.id} className="pokemon-card" style={{ backgroundColor: getCardColor(pokemon.id) }}>
+          <Link to={`/pokemon/${pokemon.name}`} key={pokemon.id} className="pokemon-card" style={{ backgroundColor: getCardColor(pokemon) }}>
             <div className="pokemon-id">#{pokemon.id}</div>
             <h2 className="pokemon-name">{capitalize(pokemon.name)}</h2>
             <img src={pokemon.sprites.front_default} alt={pokemon.name} />
@@ -87,7 +87,7 @@ function PokemonDetail() {
 
   return (
     <div className="p-4">
-      <button onClick={() => navigate(-1)} className="mb-4 underline text-blue-600">← Return</button>
+      <button onClick={() => navigate(-1)} className="mb-4 underline text-blue-600">← Back</button>
       <h1 className="text-2xl font-bold">{capitalize(pokemon.name)} (#{pokemon.id})</h1>
       <img src={pokemon.sprites.front_default} alt={pokemon.name} />
       <p><strong>Height:</strong> {pokemon.height}</p>
