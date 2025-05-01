@@ -18,11 +18,17 @@ function App() {
   );
 }
 
-function getCardColor(id) {
-  if ([1, 2, 3, 10, 11, 12].includes(id)) return '#8bd674'; // green
-  if ([4, 5, 6].includes(id)) return '#f5ac78'; // orange
-  if ([7, 8, 9].includes(id)) return '#9db7f5'; // blue
-  return '#eee';
+const typeColors = {
+  normal: '#A8A77A', fire: '#EE8130', water: '#6390F0', electric: '#F7D02C',
+  grass: '#7AC74C', ice: '#96D9D6', fighting: '#C22E28', poison: '#A33EA1',
+  ground: '#E2BF65', flying: '#A98FF3', psychic: '#F95587', bug: '#A6B91A',
+  rock: '#B6A136', ghost: '#735797', dragon: '#6F35FC', dark: '#705746',
+  steel: '#B7B7CE', fairy: '#D685AD'
+};
+
+function getCardColor(pokemon) {
+  const primaryType = pokemon.types?.[0]?.type?.name;
+  return typeColors[primaryType] || '#eee';
 }
 
 function capitalize(str) {
@@ -81,7 +87,7 @@ function PokemonDetail() {
 
   return (
     <div className="p-4">
-      <button onClick={() => navigate(-1)} className="mb-4 underline text-blue-600">← Back</button>
+      <button onClick={() => navigate(-1)} className="mb-4 underline text-blue-600">← Return</button>
       <h1 className="text-2xl font-bold">{capitalize(pokemon.name)} (#{pokemon.id})</h1>
       <img src={pokemon.sprites.front_default} alt={pokemon.name} />
       <p><strong>Height:</strong> {pokemon.height}</p>
