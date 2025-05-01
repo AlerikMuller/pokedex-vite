@@ -67,8 +67,49 @@ function Pokedex() {
   );
 }
 
+function PokemonDetail() {
+  const { name } = useParams();
+  const navigate = useNavigate();
+  const [pokemon, setPokemon] = useState(null);
+
+  useEffect(() => {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+      .then(res => res.json())
+      .then(data => setPokemon(data));
+  }, [name]);
+
+  if (!pokemon) return <p className="p-6">Loading...</p>;
+
+  return (
+    <div className="p-6">
+      <button onClick={() => navigate(-1)} className="mb-4 bg-gray-300 px-4 py-2 rounded">Return</button>
+      <h2 className="text-2xl font-bold mb-4">{capitalize(pokemon.name)}</h2>
+      <img src={pokemon.sprites.front_default} alt={pokemon.name} className="mx-auto mb-4" />
+      <p><strong>Type(s):</strong> {pokemon.types.map(t => t.type.name).join(", ")}</p>
+      <p><strong>Height:</strong> {pokemon.height}</p>
+      <p><strong>Weight:</strong> {pokemon.weight}</p>
+      <p><strong>Abilities:</strong> {pokemon.abilities.map(a => a.ability.name).join(", ")}</p>
+      <p className="mt-4 font-bold">Stats:</p>
+      <ul className="list-disc list-inside">
+        {pokemon.stats.map(stat => (
+          <li key={stat.stat.name}>{stat.stat.name}: {stat.base_stat}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function About() {
-  return <div className="p-4">This is the About page.</div>;
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">About This Pokédex</h1>
+      <p>This is a Pokédex application built with React and Vite, using data from a site called "PokéAPI".</p>
+    </div>
+  );
+}
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 function PokemonDetail() {
