@@ -38,12 +38,17 @@ function capitalize(str) {
 function Pokedex() {
   const [pokemonList, setPokemonList] = useState([]);
   const [offset, setOffset] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
   const limit = 15;
+
+  const currentPage = Math.floor(offset / limit);
+  const lastPage = Math.floor((totalCount - 1) / limit);
 
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
       .then(res => res.json())
       .then(data => {
+        setTotalCount(data.count);
         Promise.all(data.results.map(p => fetch(p.url).then(res => res.json())))
           .then(setPokemonList);
       });
@@ -61,8 +66,11 @@ function Pokedex() {
         ))}
       </div>
       <div className="pagination">
-        <button onClick={() => setOffset(Math.max(0, offset - limit))}>Previous</button>
-        <button onClick={() => setOffset(offset + limit)}>Next</button>
+        <button onClick={() => setOffset(0)} disabled={offset === 0}>First</button>
+        <button onClick={() => setOffset(Math.max(0, offset - limit))} disabled={offset === 0}>Previous</button>
+        <span>Page {currentPage + 1} of {lastPage + 1}</span>
+        <button onClick={() => setOffset(offset + limit)} disabled={currentPage >= lastPage}>Next</button>
+        <button onClick={() => setOffset(lastPage * limit)} disabled={currentPage >= lastPage}>Last</button>
       </div>
     </div>
   );
