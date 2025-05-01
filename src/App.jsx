@@ -77,7 +77,7 @@ function Pokedex() {
 }
 
 function About() {
-  return <div className="p-4">This is the About page. It provides information about the Pokédex project.</div>;
+  return <div className="p-4">This is a Pokédex application built with React and Vite, using data from a site called "PokéAPI".</div>;
 }
 
 function PokemonDetail() {
@@ -95,7 +95,7 @@ function PokemonDetail() {
 
   return (
     <div className="p-4">
-      <button onClick={() => navigate(-1)} className="mb-4 underline text-blue-600">← Back</button>
+      <button onClick={() => navigate(-1)} className="mb-4 underline text-blue-600">← Return</button>
       <h1 className="text-2xl font-bold">{capitalize(pokemon.name)} (#{pokemon.id})</h1>
       <img src={pokemon.sprites.front_default} alt={pokemon.name} />
       <p><strong>Height:</strong> {pokemon.height}</p>
