@@ -45,26 +45,32 @@ function Pokedex() {
   }, [offset]);
 
   return (
-    <div className="pokedex-container">
-      <div className="pokemon-grid">
-        {pokemonList.map((pokemon, index) => (
-          <div
-            key={pokemon.id}
-            className="pokemon-card"
-            style={{ backgroundColor: getCardColor(pokemon.id) }}
+      <div className="p-6">
+        <h1 className="text-2xl font-bold mb-4">Mini Pokédex</h1>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {pokemonList.map(pokemon => (
+            <Link to={`/pokemon/${pokemon.name}`} key={pokemon.name} className="border p-4 rounded shadow hover:bg-gray-100">
+              {capitalize(pokemon.name)}
+            </Link>
+          ))}
+        </div>
+        <div className="flex justify-between mt-6">
+          <button
+            onClick={() => setOffset(prev => Math.max(prev - 20, 0))}
+            disabled={offset === 0}
+            className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400"
           >
-            <div className="pokemon-id">#{pokemon.id}</div>
-            <h2 className="pokemon-name">{capitalize(pokemon.name)}</h2>
-            <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-          </div>
-        ))}
+            Previous
+          </button>
+          <button
+            onClick={() => setOffset(prev => prev + 20)}
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+          >
+            Next
+          </button>
+        </div>
       </div>
-      <div className="pagination">
-        <button onClick={() => setOffset(Math.max(0, offset - 12))}>Previous</button>
-        <button onClick={() => setOffset(offset + 12)}>Next</button>
-      </div>
-    </div>
-  );
+    );
 }
 
 function PokemonDetail() {
@@ -100,7 +106,12 @@ function PokemonDetail() {
 }
 
 function About() {
-  return <div className="p-4">This is the About page.</div>;
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">About This Pokédex</h1>
+      <p>This is a Pokédex application built with React and Vite, using data from a site called "PokéAPI".</p>
+    </div>
+  );
 }
 
 function capitalize(str) {
