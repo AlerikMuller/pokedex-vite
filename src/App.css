@@ -2,6 +2,8 @@ html, body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .pokedex-container {
@@ -12,13 +14,13 @@ html, body, #root {
   flex-direction: column;
   justify-content: space-between;
   font-family: sans-serif;
+  width: 100%;
 }
 
 .pokemon-grid {
   flex-grow: 1;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -35,6 +37,7 @@ html, body, #root {
   text-decoration: none;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   transition: transform 0.2s;
+  width: 100%;
 }
 
 .pokemon-card:hover {
